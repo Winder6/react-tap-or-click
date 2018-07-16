@@ -20,7 +20,7 @@ var isFunction = (function() {
 function getCallbackHandlers(callback) {
         var state = {}
 
-        handler = {
+        var handler = {
             callback: callback,
             touchStart: function(event) {
                 if (event.defaultPrevented) {
