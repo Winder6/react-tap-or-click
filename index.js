@@ -17,22 +17,7 @@ var isFunction = (function() {
     return objectFn
 })()
 
-var cache = []
-
 function getCallbackHandlers(callback) {
-    // flush cache if we have too many items
-    if (cache.length > 10000) {
-        if (typeof console !== 'undefined' && 'log' in console) {
-            console.log('tapOrClick cache flushed after 10000 items; check your renders if this happens often')
-        }
-        cache.length = 0
-    }
-
-    var handler = cache.filter(function(handler) {
-        return handler.callback === callback
-    })[0]
-
-    if (!handler) {
         var state = {}
 
         handler = {
@@ -51,7 +36,7 @@ function getCallbackHandlers(callback) {
                     state.touchTimeout = setTimeout(function() {
                         state.touchClick = false
                         state.touchTimeout = null
-                    }, 300)
+                    }, 50)
                 }
             },
             click: function(event) {
@@ -61,9 +46,6 @@ function getCallbackHandlers(callback) {
                 callback(event)
             }
         }
-
-        cache.push(handler)
-    }
 
     return handler
 }
